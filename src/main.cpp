@@ -1,42 +1,34 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cmath>
+#include <cctype>
+#include <climits>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-void process(std::istream &in, std::ostream &out) {
-    const double taxiStartPrice = 0.70;
-    const double taxiDayPrice = 0.79;
-    const double taxiNightPrice = 0.90;
-    const double busPrice = 0.09; // can be used for distance of minimum of 20km
-    const double trainPrice = 0.06; // can be used for distance of minimum of 100km
-
-    int kmCount = 0;
-    std::string dayOrNight;
-    in >> kmCount >> dayOrNight;
-
-    double lowestPrice = 0.0;
-
-    if (kmCount < 20) {
-        double taxiPrice;
-        if (dayOrNight == "day"){
-            taxiPrice = taxiDayPrice * kmCount;
+int process(std::istream &cin, std::ostream &cout) {
+    std::string destination;
+    double ticketPrice = 0;
+    cin >> destination;
+    while (destination != "End") {
+        cin >> ticketPrice;
+        double collectedMoney = 0;
+        while (collectedMoney < ticketPrice) {
+            int earnedMoney;
+            if (!(cin >> earnedMoney)) {
+                break;
+            }
+            collectedMoney += earnedMoney;
         }
-        if (dayOrNight == "night"){
-            taxiPrice = taxiNightPrice * kmCount;
+        if (collectedMoney >= ticketPrice) {
+            cout << "Going to " << destination << "!" << std::endl;
         }
-        lowestPrice = taxiStartPrice + taxiPrice;
-    } else if (kmCount >= 100) {
-        lowestPrice = kmCount * trainPrice;
-    } else {
-        lowestPrice = kmCount * busPrice;
+        cin >> destination;
     }
-
-    out.setf(std::ios::fixed);
-    out.precision(2);
-    out << lowestPrice << std::endl;
+    return 0;
 }
 
 int main(int argc, char **argv) {
