@@ -1,5 +1,6 @@
-cmake-build-debug/
-Google_tests/
-.idea
-compile_commands.json
-out/    
+/.idea/
+/cmake-build-debug/
+/main
+/.cache/
+/out
+/compile_commands.json
