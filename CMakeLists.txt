@@ -11,10 +11,10 @@ include_directories(${GTEST_INCLUDE_DIRS} src)
 add_executable(PB src/main.cpp)
 
 # Create a separate executable for the tests
-add_executable(PBTest tests/main_test.cpp)
+add_executable(PbTest tests/main_test.cpp)
 
 # Add a compile definition to the test executable
-target_compile_definitions(PBTest PRIVATE TESTING)
+target_compile_definitions(PbTest PRIVATE TESTING)
 
 # Link the GoogleTest package with our executable
-target_link_libraries(PBTest ${GTEST_LIBRARIES} pthread)
+target_link_libraries(PbTest ${GTEST_LIBRARIES} pthread)

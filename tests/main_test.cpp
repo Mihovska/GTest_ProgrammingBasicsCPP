@@ -17,8 +17,8 @@ class PbTest : public ::testing::TestWithParam<TestParam> {
 
 std::vector<TestParam> generateTestParams() {
     std::vector<TestParam> params;
-    std::ifstream inputFile("../tests/testInputs.txt");
-    std::ifstream expectedOutputFile("../tests/testExpectedResults.txt");
+    std::ifstream inputFile("../../tests/testInputs.txt");
+    std::ifstream expectedOutputFile("../../tests/testExpectedResults.txt");
     std::string line;
     int testCaseNumber = 0;
     std::string input;
