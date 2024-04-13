@@ -21,37 +21,47 @@
 #include <gtest/gtest.h>
 #endif
 
+double calculateAverage(const std::list<int> &sizes) {
+  if (sizes.empty())
+    return 0.0;
+  int sum = 0;
+  for (int size : sizes) {
+    sum += size;
+  }
+  return static_cast<double>(sum) / sizes.size();
+}
 int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
+  std::list<int> cows, sheep, other;
+  std::string input;
 
-  std::string line;
+  while (getline(cin, input)) {
+    if (input.length() < 2) {
+      continue;
+    }
 
-  getline(cin, line);
-  std::istringstream issFirst(line);
-  std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
-  }
+    char type = input[0];
+    int size = input[1] - '0';
 
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
-  }
-
-  std::string output;
-  int size = std::min(firstVector.size(), secondVector.size());
-
-  for (int i = 0; i < size; ++i) {
-    if (firstVector[i] < secondVector[i]) {
-      cout << ">";
-    } else if (firstVector[i] > secondVector[i]) {
-      cout << "<";
-    } else {
-      cout << "=";
+    switch (type) {
+    case 'C':
+      cows.push_back(size);
+      break;
+    case 'S':
+      sheep.push_back(size);
+      break;
+    default:
+      other.push_back(size);
     }
   }
+  cout << cows.size() << "cows: "
+       << ", Average size: " << std::fixed << std::setprecision(2)
+       << calculateAverage(cows) << std::endl;
+  cout << sheep.size() << "sheep: "
+       << ", Average size: " << std::fixed << std::setprecision(2)
+       << calculateAverage(sheep) << std::endl;
+  cout << other.size() << "others: "
+       << ", Average size: " << std::fixed << std::setprecision(2)
+       << calculateAverage(other) << std::endl;
 
   return 0;
 }
