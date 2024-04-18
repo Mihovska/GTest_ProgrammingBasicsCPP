@@ -21,6 +21,36 @@
 #include <gtest/gtest.h>
 #endif
 
+std::string printComparissonSign(std::vector<std::string> firstVec,
+                                 std::vector<std::string> secondVec, int size) {
+  std::string result;
+  for (int i = 0; i < size; ++i) {
+    if (i < firstVec.size() && i < secondVec.size()) {
+      std::string firstNum = firstVec[i];
+      std::string secondNum = secondVec[i];
+
+      if (firstNum.length() > secondNum.length()) {
+        result += "<";
+      } else if (firstNum.length() < secondNum.length()) {
+        result += ">";
+      } else {
+        if (firstNum > secondNum) {
+          result += "<";
+        } else if (firstNum < secondNum) {
+          result += ">";
+        } else {
+          result += "=";
+        }
+      }
+    } else if (i < firstVec.size()) {
+      result += "+";
+    } else {
+      result += "-";
+    }
+  }
+  return result;
+}
+
 int process(std::istream &cin, std::ostream &cout) {
   std::vector<std::string> firstVector;
   std::vector<std::string> secondVector;
@@ -40,18 +70,19 @@ int process(std::istream &cin, std::ostream &cout) {
     secondVector.push_back(num);
   }
 
-  std::string output;
-  int size = std::min(firstVector.size(), secondVector.size());
-
-  for (int i = 0; i < size; ++i) {
-    if (firstVector[i] < secondVector[i]) {
-      cout << ">";
-    } else if (firstVector[i] > secondVector[i]) {
-      cout << "<";
-    } else {
-      cout << "=";
-    }
+  std::string result;
+  if (firstVector.size() < secondVector.size()) {
+    result =
+        printComparissonSign(firstVector, secondVector, secondVector.size());
+  } else if (firstVector.size() > secondVector.size()) {
+    result =
+        printComparissonSign(firstVector, secondVector, firstVector.size());
+  } else {
+    result =
+        printComparissonSign(firstVector, secondVector, firstVector.size());
   }
+
+  cout << result << std::endl;
 
   return 0;
 }
