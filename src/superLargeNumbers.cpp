@@ -1,17 +1,10 @@
-#include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <iomanip>
-#include <ios>
 #include <iostream>
-#include <iterator>
-#include <list>
-#include <locale>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -22,65 +15,63 @@
 #endif
 
 std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec, int size) {
+                                 std::vector<std::string> secondVec) {
   std::string result;
-  for (int i = 0; i < size; ++i) {
-    if (i < firstVec.size() && i < secondVec.size()) {
-      std::string firstNum = firstVec[i];
-      std::string secondNum = secondVec[i];
 
-      if (firstNum.length() > secondNum.length()) {
+  auto firstIt = firstVec.begin();
+  auto secondIt = secondVec.begin();
+
+  while (firstIt != firstVec.end() || secondIt != secondVec.end()) {
+    if (firstIt == firstVec.end()) {
+      result += "-";
+    } else if (secondIt == secondVec.end()) {
+      result += "+";
+    } else {
+      const std::string first = *firstIt;
+      const std::string second = *secondIt;
+
+      if (first.size() > second.size()) {
         result += "<";
-      } else if (firstNum.length() < secondNum.length()) {
+      } else if (first.size() < second.size()) {
         result += ">";
       } else {
-        if (firstNum > secondNum) {
+        if (first > second) {
           result += "<";
-        } else if (firstNum < secondNum) {
+        } else if (first < second) {
           result += ">";
         } else {
           result += "=";
         }
       }
-    } else if (i < firstVec.size()) {
-      result += "+";
-    } else {
-      result += "-";
+    }
+    if (firstIt != firstVec.end()) {
+      ++firstIt;
+    }
+    if (secondIt != secondVec.end()) {
+      ++secondIt;
     }
   }
   return result;
 }
 
-int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
-
-  std::string line;
-
-  getline(cin, line);
-  std::istringstream issFirst(line);
+std::vector<std::string> getVector(std::istream &cin, std::string line) {
+  std::getline(cin, line);
+  std::istringstream iss(line);
   std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
-  }
 
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
+  std::vector<std::string> result;
+  while (iss >> num) {
+    result.push_back(num);
   }
+  return result;
+}
 
-  std::string result;
-  if (firstVector.size() < secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, secondVector.size());
-  } else if (firstVector.size() > secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  } else {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  }
+int process(std::istream &cin, std::ostream &cout) {
+  std::string line;
+  std::vector<std::string> firstVector = getVector(cin, line);
+  std::vector<std::string> secondVector = getVector(cin, line);
+
+  std::string result = printComparissonSign(firstVector, secondVector);
 
   cout << result << std::endl;
 
