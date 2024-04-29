@@ -1,10 +1,17 @@
+#include <algorithm>
+#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <iomanip>
+#include <ios>
 #include <iostream>
+#include <iterator>
+#include <list>
+#include <locale>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -14,66 +21,62 @@
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec) {
-  std::string result;
-
-  auto firstIt = firstVec.begin();
-  auto secondIt = secondVec.begin();
-
-  while (firstIt != firstVec.end() || secondIt != secondVec.end()) {
-    if (firstIt == firstVec.end()) {
-      result += "-";
-    } else if (secondIt == secondVec.end()) {
-      result += "+";
-    } else {
-      const std::string first = *firstIt;
-      const std::string second = *secondIt;
-
-      if (first.size() > second.size()) {
-        result += "<";
-      } else if (first.size() < second.size()) {
-        result += ">";
-      } else {
-        if (first > second) {
-          result += "<";
-        } else if (first < second) {
-          result += ">";
-        } else {
-          result += "=";
-        }
-      }
+void printCattle(std::list<std::string> cattles, double avgCattles,
+                 std::string type, std::ostream &cout) {
+  if (cattles.empty()) {
+    cout << "no " << type << "!" << std::endl;
+  } else {
+    cout << cattles.size() << " " << type << ": ";
+    for (auto cattle : cattles) {
+      cout << cattle << " ";
     }
-    if (firstIt != firstVec.end()) {
-      ++firstIt;
-    }
-    if (secondIt != secondVec.end()) {
-      ++secondIt;
-    }
+    cout << "with avg. size " << std::fixed << std::setprecision(2)
+         << avgCattles << std::endl;
   }
-  return result;
 }
 
-std::vector<std::string> getVector(std::istream &cin, std::string line) {
-  std::getline(cin, line);
-  std::istringstream iss(line);
-  std::string num;
-
-  std::vector<std::string> result;
-  while (iss >> num) {
-    result.push_back(num);
-  }
-  return result;
+double calculateAverage(std::list<std::string> &cattles, double sizeSum) {
+  return sizeSum * 1.0 / cattles.size();
 }
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::string line;
-  std::vector<std::string> firstVector = getVector(cin, line);
-  std::vector<std::string> secondVector = getVector(cin, line);
+  std::list<std::string> cows, sheep, others;
+  std::string input;
+  std::getline(cin, input);
 
-  std::string result = printComparissonSign(firstVector, secondVector);
+  int cowsSizeSum = 0;
+  int sheepSizeSum = 0;
+  int othersSizeSum = 0;
 
-  cout << result << std::endl;
+  std::istringstream iss(input);
+  std::string word;
+  while (iss >> word) {
+
+    char type = word[0];
+    int size = word[1] - '0';
+
+    switch (type) {
+    case 'C':
+      cows.push_back(word);
+      cowsSizeSum += size;
+      break;
+    case 'S':
+      sheep.push_back(word);
+      sheepSizeSum += size;
+      break;
+    default:
+      others.push_back(word);
+      othersSizeSum += size;
+    }
+  }
+
+  double avgCows = calculateAverage(cows, cowsSizeSum);
+  double avgSheep = calculateAverage(sheep, sheepSizeSum);
+  double avgOthers = calculateAverage(others, othersSizeSum);
+
+  printCattle(cows, avgCows, "cows", cout);
+  printCattle(sheep, avgSheep, "sheep", cout);
+  printCattle(others, avgOthers, "others", cout);
 
   return 0;
 }
