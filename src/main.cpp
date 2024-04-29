@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -9,75 +7,68 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <iterator>
-#include <list>
-#include <locale>
 #include <ostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-void printCattle(std::list<std::string> cattles, double avgCattles,
-                 std::string type, std::ostream &cout) {
-  if (cattles.empty()) {
-    cout << "no " << type << "!" << std::endl;
-  } else {
-    cout << cattles.size() << " " << type << ": ";
-    for (auto cattle : cattles) {
-      cout << cattle << " ";
+int findMaxNumber(int arr[], int size) {
+  int maxNum = INT_MIN;
+
+  for (int i = 0; i < size; ++i) {
+    if (i % 2 == 1 && arr[i] > maxNum) {
+      maxNum = arr[i];
     }
-    cout << "with avg. size " << std::fixed << std::setprecision(2)
-         << avgCattles << std::endl;
   }
+  return maxNum;
 }
 
-double calculateAverage(std::list<std::string> &cattles, double sizeSum) {
-  return sizeSum * 1.0 / cattles.size();
+int findMinNumber(int arr[], int size) {
+  int minNum = INT_MAX;
+
+  for (int i = 0; i < size; ++i) {
+    if (i % 2 == 0 && arr[i] < minNum) {
+      minNum = arr[i];
+    }
+  }
+  return minNum;
+}
+
+double findAverage(int arr[], int size) {
+  int sum = 0;
+
+  for (int i = 0; i < size; ++i) {
+    sum += arr[i];
+  }
+
+  return sum * 1.0 / size;
 }
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::list<std::string> cows, sheep, others;
-  std::string input;
-  std::getline(cin, input);
+  int size = 0;
+  cin >> size;
 
-  int cowsSizeSum = 0;
-  int sheepSizeSum = 0;
-  int othersSizeSum = 0;
+  int *arr = new int[size];
 
-  std::istringstream iss(input);
-  std::string word;
-  while (iss >> word) {
-
-    char type = word[0];
-    int size = word[1] - '0';
-
-    switch (type) {
-    case 'C':
-      cows.push_back(word);
-      cowsSizeSum += size;
-      break;
-    case 'S':
-      sheep.push_back(word);
-      sheepSizeSum += size;
-      break;
-    default:
-      others.push_back(word);
-      othersSizeSum += size;
-    }
+  for (int i = 0; i < size; ++i) {
+    cin >> arr[i];
   }
 
-  double avgCows = calculateAverage(cows, cowsSizeSum);
-  double avgSheep = calculateAverage(sheep, sheepSizeSum);
-  double avgOthers = calculateAverage(others, othersSizeSum);
+  double maxNumberOddPositions = findMaxNumber(arr, size);
+  double minNumberEvenPositions = findMinNumber(arr, size);
+  double averageNumber = findAverage(arr, size);
 
-  printCattle(cows, avgCows, "cows", cout);
-  printCattle(sheep, avgSheep, "sheep", cout);
-  printCattle(others, avgOthers, "others", cout);
+  cout << std::fixed << std::setprecision(2);
+  cout << maxNumberOddPositions << " " << minNumberEvenPositions << " "
+       << averageNumber << std::endl;
 
+  for (int i = size - 1; i >= 0; --i) {
+    cout << arr[i] << " ";
+  }
+  cout << std::endl;
+
+  delete[] arr;
   return 0;
 }
 
