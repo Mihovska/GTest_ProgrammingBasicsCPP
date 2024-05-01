@@ -1,3 +1,5 @@
+
+
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -30,17 +32,13 @@ std::string printComparissonSign(std::vector<std::string> firstVec,
       const std::string first = *firstIt;
       const std::string second = *secondIt;
 
-      if (first.size() > second.size()) {
-        result += "<";
-      } else if (first.size() < second.size()) {
-        result += ">";
+      if (first.size() != second.size()) {
+        result += first.size() > second.size() ? "<" : ">";
       } else {
-        if (first > second) {
-          result += "<";
-        } else if (first < second) {
-          result += ">";
-        } else {
+        if (first == second) {
           result += "=";
+        } else {
+          result += first > second ? "<" : ">";
         }
       }
     }
