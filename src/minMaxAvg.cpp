@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -13,26 +14,25 @@
 #include <gtest/gtest.h>
 #endif
 
-int findMaxNumber(int arr[], int size) {
-  int maxNum = INT_MIN;
+void findMinMaxAtIndices(const int arr[], int size,
+                         const std::function<bool(int)> &evenIndexFilter,
+                         const std::function<bool(int)> &oddIndexFilter,
+                         std::ostream &cout) {
+  int minEven = INT_MAX;
+  int maxOdd = INT_MIN;
 
   for (int i = 0; i < size; ++i) {
-    if (i % 2 == 1 && arr[i] > maxNum) {
-      maxNum = arr[i];
+    int num = arr[i];
+    if (evenIndexFilter(i)) {
+      minEven = std::min(minEven, num);
+    }
+    if (oddIndexFilter(i)) {
+      maxOdd = std::max(maxOdd, num);
     }
   }
-  return maxNum;
-}
 
-int findMinNumber(int arr[], int size) {
-  int minNum = INT_MAX;
-
-  for (int i = 0; i < size; ++i) {
-    if (i % 2 == 0 && arr[i] < minNum) {
-      minNum = arr[i];
-    }
-  }
-  return minNum;
+  cout << std::fixed << std::setprecision(2);
+  cout << static_cast<double>(maxOdd) << " " << static_cast<double>(minEven);
 }
 
 double findAverage(int arr[], int size) {
@@ -55,13 +55,15 @@ int process(std::istream &cin, std::ostream &cout) {
     cin >> arr[i];
   }
 
-  double maxNumberOddPositions = findMaxNumber(arr, size);
-  double minNumberEvenPositions = findMinNumber(arr, size);
+  auto evenIndexFilter = [](int index) { return index % 2 == 0; };
+  auto oddIndexFilter = [](int index) { return index % 2 == 1; };
+
   double averageNumber = findAverage(arr, size);
 
+  findMinMaxAtIndices(arr, size, evenIndexFilter, oddIndexFilter, cout);
+
   cout << std::fixed << std::setprecision(2);
-  cout << maxNumberOddPositions << " " << minNumberEvenPositions << " "
-       << averageNumber << std::endl;
+  cout << " " << averageNumber << std::endl;
 
   for (int i = size - 1; i >= 0; --i) {
     cout << arr[i] << " ";
