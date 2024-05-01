@@ -25,8 +25,10 @@ std::string printComparissonSign(std::vector<std::string> firstVec,
   while (firstIt != firstVec.end() || secondIt != secondVec.end()) {
     if (firstIt == firstVec.end()) {
       result += "-";
+      ++secondIt;
     } else if (secondIt == secondVec.end()) {
       result += "+";
+      ++firstIt;
     } else {
       const std::string first = *firstIt;
       const std::string second = *secondIt;
