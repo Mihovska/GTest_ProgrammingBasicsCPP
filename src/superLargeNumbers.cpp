@@ -1,5 +1,3 @@
-
-
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -8,9 +6,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <ostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
@@ -23,30 +18,32 @@ std::string printComparissonSign(std::vector<std::string> firstVec,
   auto firstIt = firstVec.begin();
   auto secondIt = secondVec.begin();
 
-  while (firstIt != firstVec.end() || secondIt != secondVec.end()) {
-    if (firstIt == firstVec.end()) {
-      result += "-";
-      ++secondIt;
-    } else if (secondIt == secondVec.end()) {
-      result += "+";
-      ++firstIt;
-    } else {
-      const std::string first = *firstIt;
-      const std::string second = *secondIt;
+  while (firstIt != firstVec.end() && secondIt != secondVec.end()) {
+    const std::string first = *firstIt;
+    const std::string second = *secondIt;
 
-      if (first.size() != second.size()) {
-        result += first.size() > second.size() ? "<" : ">";
+    if (first.size() != second.size()) {
+      result += first.size() > second.size() ? "<" : ">";
+    } else {
+      if (first == second) {
+        result += "=";
       } else {
-        if (first == second) {
-          result += "=";
-        } else {
-          result += first > second ? "<" : ">";
-        }
+        result += first > second ? "<" : ">";
       }
     }
     ++firstIt;
     ++secondIt;
   }
+
+  while (firstIt != firstVec.end()) {
+    result += "+";
+    ++firstIt;
+  }
+  while (secondIt != secondVec.end()) {
+    result += "-";
+    ++secondIt;
+  }
+
   return result;
 }
 
