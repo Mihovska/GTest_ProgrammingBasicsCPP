@@ -1,3 +1,4 @@
+
 #include <algorithm>
 #include <cctype>
 #include <cfloat>
@@ -14,25 +15,19 @@
 #include <gtest/gtest.h>
 #endif
 
-void findMinMaxAtIndices(const int arr[], int size,
-                         const std::function<bool(int)> &evenIndexFilter,
-                         const std::function<bool(int)> &oddIndexFilter,
-                         std::ostream &cout) {
-  int minEven = INT_MAX;
-  int maxOdd = INT_MIN;
+double findMinMaxAtIndices(const int arr[], int size,
+                           const std::function<bool(int)> &predicate,
+                           bool findMinEven) {
+  int result = findMinEven ? INT_MAX : INT_MIN;
 
   for (int i = 0; i < size; ++i) {
     int num = arr[i];
-    if (evenIndexFilter(i)) {
-      minEven = std::min(minEven, num);
-    }
-    if (oddIndexFilter(i)) {
-      maxOdd = std::max(maxOdd, num);
+    if (predicate(i)) {
+      result = findMinEven ? std::min(result, num) : std::max(result, num);
     }
   }
 
-  cout << std::fixed << std::setprecision(2);
-  cout << static_cast<double>(maxOdd) << " " << static_cast<double>(minEven);
+  return result;
 }
 
 double findAverage(int arr[], int size) {
@@ -55,15 +50,16 @@ int process(std::istream &cin, std::ostream &cout) {
     cin >> arr[i];
   }
 
-  auto evenIndexFilter = [](int index) { return index % 2 == 0; };
-  auto oddIndexFilter = [](int index) { return index % 2 == 1; };
+  auto evenPredicate = [](int index) { return index % 2 == 0; };
+  auto oddPredicate = [](int index) { return index % 2 == 1; };
+
+  double minEven = findMinMaxAtIndices(arr, size, evenPredicate, true);
+  double maxOdd = findMinMaxAtIndices(arr, size, oddPredicate, false);
 
   double averageNumber = findAverage(arr, size);
 
-  findMinMaxAtIndices(arr, size, evenIndexFilter, oddIndexFilter, cout);
-
   cout << std::fixed << std::setprecision(2);
-  cout << " " << averageNumber << std::endl;
+  cout << maxOdd << " " << minEven << " " << averageNumber << std::endl;
 
   for (int i = size - 1; i >= 0; --i) {
     cout << arr[i] << " ";

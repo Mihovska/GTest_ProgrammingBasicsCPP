@@ -1,79 +1,71 @@
-
+#include <algorithm>
 #include <cctype>
 #include <cfloat>
 #include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <iomanip>
+#include <ios>
 #include <iostream>
 #include <ostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec) {
-  std::string result;
+double findMinMaxAtIndices(const int arr[], int size,
+                           const std::function<bool(int)> &predicate,
+                           bool findMinEven) {
+  int result = findMinEven ? INT_MAX : INT_MIN;
 
-  auto firstIt = firstVec.begin();
-  auto secondIt = secondVec.begin();
-
-  while (firstIt != firstVec.end() || secondIt != secondVec.end()) {
-    if (firstIt == firstVec.end()) {
-      result += "-";
-      ++secondIt;
-    } else if (secondIt == secondVec.end()) {
-      result += "+";
-      ++firstIt;
-    } else {
-      const std::string first = *firstIt;
-      const std::string second = *secondIt;
-
-      if (first.size() != second.size()) {
-        result += first.size() > second.size() ? "<" : ">";
-      } else {
-        if (first == second) {
-          result += "=";
-        } else {
-          result += first > second ? "<" : ">";
-        }
-      }
-    }
-    if (firstIt != firstVec.end()) {
-      ++firstIt;
-    }
-    if (secondIt != secondVec.end()) {
-      ++secondIt;
+  for (int i = 0; i < size; ++i) {
+    int num = arr[i];
+    if (predicate(i)) {
+      result = findMinEven ? std::min(result, num) : std::max(result, num);
     }
   }
+
   return result;
 }
 
-std::vector<std::string> getVector(std::istream &cin, std::string line) {
-  std::getline(cin, line);
-  std::istringstream iss(line);
-  std::string num;
+double findAverage(int arr[], int size) {
+  int sum = 0;
 
-  std::vector<std::string> result;
-  while (iss >> num) {
-    result.push_back(num);
+  for (int i = 0; i < size; ++i) {
+    sum += arr[i];
   }
-  return result;
+
+  return sum * 1.0 / size;
 }
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::string line;
-  std::vector<std::string> firstVector = getVector(cin, line);
-  std::vector<std::string> secondVector = getVector(cin, line);
+  int size = 0;
+  cin >> size;
 
-  std::string result = printComparissonSign(firstVector, secondVector);
+  int *arr = new int[size];
 
-  cout << result << std::endl;
+  for (int i = 0; i < size; ++i) {
+    cin >> arr[i];
+  }
 
+  auto evenPredicate = [](int index) { return index % 2 == 0; };
+  auto oddPredicate = [](int index) { return index % 2 == 1; };
+
+  double minEven = findMinMaxAtIndices(arr, size, evenPredicate, true);
+  double maxOdd = findMinMaxAtIndices(arr, size, oddPredicate, false);
+
+  double averageNumber = findAverage(arr, size);
+
+  cout << std::fixed << std::setprecision(2);
+  cout << maxOdd << " " << minEven << " " << averageNumber << std::endl;
+
+  for (int i = size - 1; i >= 0; --i) {
+    cout << arr[i] << " ";
+  }
+  cout << std::endl;
+
+  delete[] arr;
   return 0;
 }
 
