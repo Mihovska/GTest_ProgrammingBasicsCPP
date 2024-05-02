@@ -11,43 +11,45 @@
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec) {
-  std::string result;
+std::string printComparissonSign(std::vector<std::string> &firstVec,
+                                 std::vector<std::string> &secondVec) {
+  std::ostringstream resultStream;
 
   auto firstIt = firstVec.begin();
   auto secondIt = secondVec.begin();
 
   while (firstIt != firstVec.end() && secondIt != secondVec.end()) {
-    const std::string first = *firstIt;
-    const std::string second = *secondIt;
+    const std::string firstVecString = *firstIt;
+    const std::string secondVecString = *secondIt;
 
-    if (first.size() != second.size()) {
-      result += first.size() > second.size() ? "<" : ">";
-    } else {
-      if (first == second) {
-        result += "=";
-      } else {
-        result += first > second ? "<" : ">";
-      }
+    if (firstVecString == secondVecString) {
+      resultStream << '=';
+    } else if (firstVecString.size() > secondVecString.size()) {
+      resultStream << '<';
+    } else if (firstVecString.size() < secondVecString.size()) {
+      resultStream << '>';
+    } else if (firstVecString > secondVecString) {
+      resultStream << '<';
+    } else if (firstVecString < secondVecString) {
+      resultStream << '>';
     }
     ++firstIt;
     ++secondIt;
   }
 
   while (firstIt != firstVec.end()) {
-    result += "+";
+    resultStream << '+';
     ++firstIt;
   }
   while (secondIt != secondVec.end()) {
-    result += "-";
+    resultStream << '-';
     ++secondIt;
   }
 
-  return result;
+  return resultStream.str();
 }
 
-std::vector<std::string> getVector(std::istream &cin, std::string line) {
+std::vector<std::string> getVector(std::istream &cin, std::string &line) {
   std::getline(cin, line);
   std::istringstream iss(line);
   std::string num;
