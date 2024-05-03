@@ -1,4 +1,3 @@
-
 #include <algorithm>
 #include <cctype>
 #include <cfloat>
@@ -16,21 +15,22 @@
 #endif
 
 double findMinMaxAtIndices(const int arr[], int size,
-                           const std::function<bool(int)> &predicate,
-                           bool findMinEven) {
-  int result = findMinEven ? INT_MAX : INT_MIN;
+                           const std::function<bool(int)> &positionPredicate,
+                           const std::function<int(int, int)> &compareNums,
+                           int minMaxLimit) {
+  int result = minMaxLimit;
 
   for (int i = 0; i < size; ++i) {
     int num = arr[i];
-    if (predicate(i)) {
-      result = findMinEven ? std::min(result, num) : std::max(result, num);
+    if (positionPredicate(i)) {
+      result = compareNums(result, num);
     }
   }
 
   return result;
 }
 
-double findAverage(int arr[], int size) {
+double findAverage(const int arr[], int size) {
   int sum = 0;
 
   for (int i = 0; i < size; ++i) {
@@ -50,11 +50,16 @@ int process(std::istream &cin, std::ostream &cout) {
     cin >> arr[i];
   }
 
-  auto evenPredicate = [](int index) { return index % 2 == 0; };
-  auto oddPredicate = [](int index) { return index % 2 == 1; };
+  auto isEvenIndex = [](int index) { return index % 2 == 0; };
+  auto isOddIndex = [](int index) { return index % 2 == 1; };
 
-  double minEven = findMinMaxAtIndices(arr, size, evenPredicate, true);
-  double maxOdd = findMinMaxAtIndices(arr, size, oddPredicate, false);
+  auto minElemLambda = [](int a, int b) { return std::min(a, b); };
+  auto maxElemLambda = [](int a, int b) { return std::max(a, b); };
+
+  double minEven =
+      findMinMaxAtIndices(arr, size, isEvenIndex, minElemLambda, INT_MAX);
+  double maxOdd =
+      findMinMaxAtIndices(arr, size, isOddIndex, maxElemLambda, INT_MIN);
 
   double averageNumber = findAverage(arr, size);
 
