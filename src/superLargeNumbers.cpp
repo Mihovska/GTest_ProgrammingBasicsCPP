@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <ostream>
+#include <sstream>
+#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
@@ -22,17 +24,22 @@ std::string printComparissonSign(std::vector<std::string> &firstVec,
     const std::string firstVecString = *firstIt;
     const std::string secondVecString = *secondIt;
 
-    if (firstVecString == secondVecString) {
+    bool isStringEqual = firstVecString == secondVecString;
+    bool firstStringIsLonger = firstVecString.size() > secondVecString.size();
+    bool firstStringIsShorter = firstVecString.size() < secondVecString.size();
+    bool firstStringIsGreater = firstVecString > secondVecString;
+    bool firstStringIsSmaller = firstVecString < secondVecString;
+
+    if (isStringEqual) {
       resultStream << '=';
-    } else if (firstVecString.size() > secondVecString.size()) {
-      resultStream << '<';
-    } else if (firstVecString.size() < secondVecString.size()) {
+    } else if (firstStringIsShorter ||
+               (firstStringIsSmaller && !firstStringIsLonger)) {
       resultStream << '>';
-    } else if (firstVecString > secondVecString) {
+    } else if (firstStringIsLonger ||
+               (firstStringIsGreater && !firstStringIsShorter)) {
       resultStream << '<';
-    } else if (firstVecString < secondVecString) {
-      resultStream << '>';
     }
+
     ++firstIt;
     ++secondIt;
   }
