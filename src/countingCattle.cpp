@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -9,19 +7,16 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <iterator>
 #include <list>
-#include <locale>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-void printCattle(std::list<std::string> cattles, double avgCattles,
+void printCattle(std::list<std::string> &cattles, double &avgCattles,
                  std::string type, std::ostream &cout) {
   if (cattles.empty()) {
     cout << "no " << type << "!" << std::endl;
