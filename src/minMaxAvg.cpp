@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -9,41 +8,29 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <iterator>
-#include <list>
-#include <locale>
 #include <ostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-int findMaxNumber(int arr[], int size) {
-  int maxNum = INT_MIN;
+double findMinMaxAtIndices(const int arr[], int size,
+                           const std::function<bool(int)> &positionPredicate,
+                           const std::function<int(int, int)> &compareNums,
+                           int minMaxLimit) {
+  int result = minMaxLimit;
 
   for (int i = 0; i < size; ++i) {
-    if (i % 2 == 1 && arr[i] > maxNum) {
-      maxNum = arr[i];
+    int num = arr[i];
+    if (positionPredicate(i)) {
+      result = compareNums(result, num);
     }
   }
-  return maxNum;
+
+  return result;
 }
 
-int findMinNumber(int arr[], int size) {
-  int minNum = INT_MAX;
-
-  for (int i = 0; i < size; ++i) {
-    if (i % 2 == 0 && arr[i] < minNum) {
-      minNum = arr[i];
-    }
-  }
-  return minNum;
-}
-
-double findAverage(int arr[], int size) {
+double findAverage(const int arr[], int size) {
   int sum = 0;
 
   for (int i = 0; i < size; ++i) {
@@ -63,13 +50,21 @@ int process(std::istream &cin, std::ostream &cout) {
     cin >> arr[i];
   }
 
-  double maxNumberOddPositions = findMaxNumber(arr, size);
-  double minNumberEvenPositions = findMinNumber(arr, size);
+  auto isEvenIndex = [](int index) { return index % 2 == 0; };
+  auto isOddIndex = [](int index) { return index % 2 == 1; };
+
+  auto minElemLambda = [](int a, int b) { return std::min(a, b); };
+  auto maxElemLambda = [](int a, int b) { return std::max(a, b); };
+
+  double minEven =
+      findMinMaxAtIndices(arr, size, isEvenIndex, minElemLambda, INT_MAX);
+  double maxOdd =
+      findMinMaxAtIndices(arr, size, isOddIndex, maxElemLambda, INT_MIN);
+
   double averageNumber = findAverage(arr, size);
 
   cout << std::fixed << std::setprecision(2);
-  cout << maxNumberOddPositions << " " << minNumberEvenPositions << " "
-       << averageNumber << std::endl;
+  cout << maxOdd << " " << minEven << " " << averageNumber << std::endl;
 
   for (int i = size - 1; i >= 0; --i) {
     cout << arr[i] << " ";

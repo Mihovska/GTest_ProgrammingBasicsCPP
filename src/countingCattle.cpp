@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
@@ -9,58 +7,31 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
-#include <iterator>
 #include <list>
-#include <locale>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-void printCows(std::list<std::string> &cows, double avgCows,
-               std::ostream &cout) {
-  if (cows.size() == 0) {
-    cout << "no cows!" << std::endl;
+void printCattle(std::list<std::string> &cattles, double &avgCattles,
+                 std::string type, std::ostream &cout) {
+  if (cattles.empty()) {
+    cout << "no " << type << "!" << std::endl;
   } else {
-    cout << cows.size() << " cows: ";
-    for (auto cow : cows) {
-      cout << cow << " ";
+    cout << cattles.size() << " " << type << ": ";
+    for (auto cattle : cattles) {
+      cout << cattle << " ";
     }
-    cout << "with avg. size " << std::fixed << std::setprecision(2) << avgCows
-         << std::endl;
+    cout << "with avg. size " << std::fixed << std::setprecision(2)
+         << avgCattles << std::endl;
   }
 }
 
-void printSheep(std::list<std::string> &sheep, double avgSheep,
-                std::ostream &cout) {
-  if (sheep.size() == 0) {
-    cout << "no sheep!" << std::endl;
-  } else {
-    cout << sheep.size() << " sheep: ";
-    for (auto sheep : sheep) {
-      cout << sheep << " ";
-    }
-    cout << "with avg. size " << std::fixed << std::setprecision(2) << avgSheep
-         << std::endl;
-  }
-}
-
-void printOthers(std::list<std::string> &others, double avgOthers,
-                 std::ostream &cout) {
-  if (others.size() == 0) {
-    cout << "no others!" << std::endl;
-  } else {
-    cout << others.size() << " others: ";
-    for (auto other : others) {
-      cout << other << " ";
-    }
-    cout << "with avg. size " << std::fixed << std::setprecision(2) << avgOthers
-         << std::endl;
-  }
+double calculateAverage(std::list<std::string> &cattles, double sizeSum) {
+  return sizeSum * 1.0 / cattles.size();
 }
 
 int process(std::istream &cin, std::ostream &cout) {
@@ -94,13 +65,13 @@ int process(std::istream &cin, std::ostream &cout) {
     }
   }
 
-  double avgCows = cowsSizeSum * 1.0 / cows.size();
-  double avgSheep = sheepSizeSum * 1.0 / sheep.size();
-  double avgOthers = othersSizeSum * 1.0 / others.size();
+  double avgCows = calculateAverage(cows, cowsSizeSum);
+  double avgSheep = calculateAverage(sheep, sheepSizeSum);
+  double avgOthers = calculateAverage(others, othersSizeSum);
 
-  printCows(cows, avgCows, cout);
-  printSheep(sheep, avgSheep, cout);
-  printOthers(others, avgOthers, cout);
+  printCattle(cows, avgCows, "cows", cout);
+  printCattle(sheep, avgSheep, "sheep", cout);
+  printCattle(others, avgOthers, "others", cout);
 
   return 0;
 }
