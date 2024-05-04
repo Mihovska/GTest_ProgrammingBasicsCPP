@@ -16,8 +16,8 @@
 #include <gtest/gtest.h>
 #endif
 
-void printCattle(std::list<std::string> &cattles, double &avgCattles,
-                 std::string type, std::ostream &cout) {
+void printCattle(const std::list<std::string> &cattles, double &avgCattles,
+                 const std::string &type, std::ostream &cout) {
   if (cattles.empty()) {
     cout << "no " << type << "!" << std::endl;
   } else {
@@ -47,8 +47,12 @@ int process(std::istream &cin, std::ostream &cout) {
   std::string word;
   while (iss >> word) {
 
-    char type = word[0];
-    int size = word[1] - '0';
+    std::istringstream wordStream(word);
+    char type;
+    wordStream >> type;
+
+    std::string sizeStr = word.substr(1);
+    int size = std::stoi(sizeStr);
 
     switch (type) {
     case 'C':
