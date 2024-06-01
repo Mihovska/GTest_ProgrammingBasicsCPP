@@ -50,7 +50,7 @@ int process(std::istream &cin, std::ostream &cout) {
   cout << findMaxElement(orders) << std::endl;
 
   std::queue<int> ordersLeft;
-  while (foodQuantity > 0 && !orders.empty()) {
+  while (foodQuantity >= 0 && !orders.empty()) {
     int curOrder = orders.front();
     if (foodQuantity >= curOrder) {
       orders.pop();
@@ -65,7 +65,7 @@ int process(std::istream &cin, std::ostream &cout) {
   if (!ordersLeft.empty()) {
     cout << "Orders left: ";
     while (!ordersLeft.empty()) {
-      cout << ordersLeft.front();
+      cout << ordersLeft.front() << " ";
       ordersLeft.pop();
     }
     cout << std::endl;
