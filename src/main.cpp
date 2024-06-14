@@ -1,88 +1,72 @@
-#include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
-#include <iomanip>
-#include <ios>
-#include <iostream>
-#include <iterator>
-#include <list>
-#include <locale>
 #include <ostream>
-#include <sstream>
-#include <string>
 #include <vector>
+#include <set>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <algorithm>
+#include <utility>
+#include <string>
+#include <cstring>
+#include <cstddef>
+#include <map>
+
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec, int size) {
-  std::string result;
-  for (int i = 0; i < size; ++i) {
-    if (i < firstVec.size() && i < secondVec.size()) {
-      std::string firstNum = firstVec[i];
-      std::string secondNum = secondVec[i];
-
-      if (firstNum.length() > secondNum.length()) {
-        result += "<";
-      } else if (firstNum.length() < secondNum.length()) {
-        result += ">";
-      } else {
-        if (firstNum > secondNum) {
-          result += "<";
-        } else if (firstNum < secondNum) {
-          result += ">";
-        } else {
-          result += "=";
-        }
-      }
-    } else if (i < firstVec.size()) {
-      result += "+";
-    } else {
-      result += "-";
-    }
-  }
-  return result;
-}
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
+  std::string textLine;
+  std::getline(cin, textLine);
 
-  std::string line;
+  for (char &c : textLine) {
+    if (!isalpha(c)) {
+      c = ' ';
+    }
+  }
+  std::set<std::string> uniqueWords;
 
-  getline(cin, line);
-  std::istringstream issFirst(line);
-  std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
+  std::istringstream iss(textLine);
+  std::string word;
+
+  while (iss >> word) {
+    uniqueWords.insert(word);
   }
 
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
-  }
+  while (true) {
+    char letter;
+    cin >> letter;
 
-  std::string result;
-  if (firstVector.size() < secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, secondVector.size());
-  } else if (firstVector.size() > secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  } else {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  }
+    if (letter == '.') {
+      break;
+    }
 
-  cout << result << std::endl;
+    letter = tolower(letter);
+    bool bFound = false;
+
+    for (const std::string &currWord : uniqueWords) {
+      std::string transformed = currWord;
+      std::transform(transformed.begin(), transformed.end(), transformed.begin(), ::tolower);
+
+      if (transformed.find(letter) != std::string::npos) {
+        bFound = true;
+        cout << currWord << " ";
+      }
+    }
+
+    if (!bFound) {
+      cout << "---";
+    }
+
+    cout << std::endl;
+  }
 
   return 0;
 }
