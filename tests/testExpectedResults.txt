@@ -1,3 +1,4 @@
-Each a alphabetical and any are as call character characters lowercase same uppercase variant
-You any
-Each English alphabetical character characters the those
+Sofia,42.70,23.33
+New York,40.6976701,-74.2598732
+Sofia,42.70,23.33
+SoftUni,42.70,23.33
