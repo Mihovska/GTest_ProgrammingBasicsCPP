@@ -20,53 +20,57 @@
 #include <gtest/gtest.h>
 #endif
 
+const int SIZE = 10;
+const char HEALTHY = '.';
+const char RUSTY = '!';
 
-int process(std::istream &cin, std::ostream &cout) {
-  std::map<std::string, std::string> namesToCoordinates;
-  std::map<std::string, std::vector<std::string>> coordinatesToNames;
-  std::string input;
+void spreadRust(std::vector<std::vector<char>> &matrix) {
+  std::vector<std::vector<char>> newMatrix = matrix;
 
-  while (std::getline(cin, input) && input != ".") {
-    std::istringstream iss(input);
-    std::string name;
-    std::string latitude;
-    std::string longitude;
-
-    std::getline(iss, name, ',');
-    std::getline(iss, latitude, ',');
-    std::getline(iss, longitude);
-
-    std::string coordinates = latitude + ',' + longitude;
-
-    namesToCoordinates[name] = coordinates;
-    coordinatesToNames[coordinates].push_back(name);
-  }
-
-  while (std::getline(cin, input) && input != ".") {
-    std::istringstream iss(input);
-    std::string locationName;
-    std::string coordinatesString;
-
-    iss >> locationName >> coordinatesString;
-
-    if (coordinatesString.empty() &&
-        namesToCoordinates.find(locationName) != namesToCoordinates.end()) {
-      std::string coords = namesToCoordinates[locationName];
-      std::string name = locationName;
-
-      cout << name << "," << coords << std::endl;
-    } else {
-      std::stringstream coordinateStream;
-      coordinateStream << locationName << ',' << coordinatesString;
-      std::string coordinates = coordinateStream.str();
-
-      if (coordinatesToNames.find(coordinates) != coordinatesToNames.end()) {
-        for (const std::string &nameCoord : coordinatesToNames[coordinates]) {
-          cout << nameCoord << "," << coordinates << std::endl;
+  for (int i = 0; i < SIZE; ++i) {
+    for (int j = 0; j < SIZE; ++j) {
+      if (matrix[i][j] == RUSTY) {
+        if (i > 0 && matrix[i - 1][j] == HEALTHY) {
+          newMatrix[i - 1][j] = RUSTY;
+        }
+        if (i < SIZE - 1 && matrix[i + 1][j] == HEALTHY) {
+          newMatrix[i + 1][j] = RUSTY;
+        }
+        if (j > 0 && matrix[i][j - 1] == HEALTHY) {
+          newMatrix[i][j - 1] = RUSTY;
+        }
+        if (j < SIZE - 1 && matrix[i][j + 1] == HEALTHY) {
+          newMatrix[i][j + 1] = RUSTY;
         }
       }
     }
   }
+  matrix = newMatrix;
+}
+
+int process(std::istream &cin, std::ostream &cout) {
+  std::vector<std::vector<char>> matrix(SIZE, std::vector<char>(SIZE));
+  int timeUnits;
+
+  for (int i = 0; i < SIZE; ++i) {
+    for (int j = 0; j < SIZE; ++j) {
+      cin >> matrix[i][j];
+    }
+  }
+
+  cin >> timeUnits;
+
+  for (int t = 0; t < timeUnits; ++t) {
+    spreadRust(matrix);
+  }
+
+  for (int i = 0; i < SIZE; ++i) {
+    for (int j = 0; j < SIZE; ++j) {
+      cout << matrix[i][j];
+    }
+    cout << std::endl;
+  }
+
   return 0;
 }
 
