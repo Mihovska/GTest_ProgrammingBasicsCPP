@@ -34,20 +34,13 @@ int process(std::istream &cin, std::ostream &cout) {
   std::set<std::string> uniqueWords;
 
   std::istringstream iss(textLine);
-  std::string word;
 
-  while (iss >> word) {
-    uniqueWords.insert(word);
+  while (iss >> textLine) {
+    uniqueWords.insert(textLine);
   }
 
-  while (true) {
-    char letter;
-    cin >> letter;
-
-    if (letter == '.') {
-      break;
-    }
-
+  char letter;
+  while (cin >> letter && letter != '.') {
     letter = tolower(letter);
     bool bFound = false;
 
