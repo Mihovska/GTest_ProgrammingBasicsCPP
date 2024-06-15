@@ -16,74 +16,47 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec, int size) {
-  std::string result;
-  for (int i = 0; i < size; ++i) {
-    if (i < firstVec.size() && i < secondVec.size()) {
-      std::string firstNum = firstVec[i];
-      std::string secondNum = secondVec[i];
+int process(std::istream &cin, std::ostream &cout) {
+  std::unordered_map<int, std::vector<std::string>> rooms;
+  std::unordered_map<std::string, std::vector<int>> kidToRooms;
 
-      if (firstNum.length() > secondNum.length()) {
-        result += "<";
-      } else if (firstNum.length() < secondNum.length()) {
-        result += ">";
-      } else {
-        if (firstNum > secondNum) {
-          result += "<";
-        } else if (firstNum < secondNum) {
-          result += ">";
-        } else {
-          result += "=";
-        }
+  std::string input;
+
+  while (std::getline(cin, input)) {
+    if (input == "END") {
+      break;
+    }
+
+    std::istringstream iss(input);
+    std::string name;
+    int room;
+    iss >> name >> room;
+
+    rooms[room].push_back(name);
+    kidToRooms[name].push_back(room);
+  }
+
+  while (std::getline(cin, input)) {
+    if (input == "END") {
+      break;
+    }
+    if (kidToRooms.find(input) != kidToRooms.end()) {
+      cout << input << ":";
+
+      for (const auto &room : kidToRooms[input]) {
+        cout << " " << room;
       }
-    } else if (i < firstVec.size()) {
-      result += "+";
+      cout << std::endl;
     } else {
-      result += "-";
+      cout << input << ": Not found!" << std::endl;
     }
   }
-  return result;
-}
-
-int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
-
-  std::string line;
-
-  getline(cin, line);
-  std::istringstream issFirst(line);
-  std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
-  }
-
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
-  }
-
-  std::string result;
-  if (firstVector.size() < secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, secondVector.size());
-  } else if (firstVector.size() > secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  } else {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  }
-
-  cout << result << std::endl;
-
   return 0;
 }
 
