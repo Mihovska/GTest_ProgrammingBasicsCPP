@@ -23,51 +23,6 @@
 
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::string textLine;
-  std::getline(cin, textLine);
-
-  for (char &c : textLine) {
-    if (!isalpha(c)) {
-      c = ' ';
-    }
-  }
-  std::set<std::string> uniqueWords;
-
-  std::istringstream iss(textLine);
-  std::string word;
-
-  while (iss >> word) {
-    uniqueWords.insert(word);
-  }
-
-  while (true) {
-    char letter;
-    cin >> letter;
-
-    if (letter == '.') {
-      break;
-    }
-
-    letter = tolower(letter);
-    bool bFound = false;
-
-    for (const std::string &currWord : uniqueWords) {
-      std::string transformed = currWord;
-      std::transform(transformed.begin(), transformed.end(), transformed.begin(), ::tolower);
-
-      if (transformed.find(letter) != std::string::npos) {
-        bFound = true;
-        cout << currWord << " ";
-      }
-    }
-
-    if (!bFound) {
-      cout << "---";
-    }
-
-    cout << std::endl;
-  }
-
   return 0;
 }
 
