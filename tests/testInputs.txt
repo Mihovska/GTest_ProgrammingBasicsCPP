@@ -1,20 +1,17 @@
-Bass A
-Pike B
-Perch A
-Tuna B
+O.B.G
+1#A.9
+K$M.T
 end
+OB$
 ===
-Goldfish A
-Trout A
-Catfish A
+OB..G
+.#A#9
+K$..T
 end
+A
 ===
-Nemo A
-Dory A
-Marlin B
-Coral A
-Goldie B
-Bubbles A
-Finn A
-Splash B
+.......
+.......
+.......
 end
+A

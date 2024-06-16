@@ -1,14 +1,33 @@
-Flow A:
-Perch, Bass
-Flow B:
-Pike, Tuna
+Stars: 7
+- A: 1
+- B: 1
+- G: 1
+- K: 1
+- M: 1
+- O: 1
+- T: 1
+Planets: 10
+Asteroids/comets: 2
++.+.G
+1#A.9
+K+M.T
 ===
-Flow A:
-Catfish, Trout, Goldfish
-Flow B:
-<EMPTY>
+Stars: 6
+- A: 1
+- B: 1
+- G: 1
+- K: 1
+- O: 1
+- T: 1
+Planets: 9
+Asteroids/comets: 3
+OB..G
+.#+#9
+K$..T
 ===
-Flow A:
-Finn, Bubbles, Coral, Dory, Nemo
-Flow B:
-Marlin, Goldie, Splash
+Stars: 0
+Planets: 0
+Asteroids/comets: 0
+.......
+.......
+.......
