@@ -10,79 +10,68 @@
 #include <ios>
 #include <iostream>
 #include <iterator>
-#include <list>
+#include <stack>
+#include <queue>
 #include <locale>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec, int size) {
-  std::string result;
-  for (int i = 0; i < size; ++i) {
-    if (i < firstVec.size() && i < secondVec.size()) {
-      std::string firstNum = firstVec[i];
-      std::string secondNum = secondVec[i];
+int process(std::istream &cin, std::ostream &cout) {
+  std::stack<std::string> flowA;
+  std::queue<std::string> flowB;
 
-      if (firstNum.length() > secondNum.length()) {
-        result += "<";
-      } else if (firstNum.length() < secondNum.length()) {
-        result += ">";
-      } else {
-        if (firstNum > secondNum) {
-          result += "<";
-        } else if (firstNum < secondNum) {
-          result += ">";
-        } else {
-          result += "=";
-        }
-      }
-    } else if (i < firstVec.size()) {
-      result += "+";
+  std::string fishName;
+  std::string flowType;
+
+  while (cin >> fishName && fishName != "end") {
+    cin >> flowType;
+
+    if (flowType == "A") {
+      flowA.push(fishName);
     } else {
-      result += "-";
+      flowB.push(fishName);
     }
   }
-  return result;
-}
 
-int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
-
-  std::string line;
-
-  getline(cin, line);
-  std::istringstream issFirst(line);
-  std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
-  }
-
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
-  }
-
-  std::string result;
-  if (firstVector.size() < secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, secondVector.size());
-  } else if (firstVector.size() > secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
+  if (flowA.empty()) {
+    cout << "Flow A:" << std::endl << "<EMPTY>" << std::endl;
   } else {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
+    cout << "Flow A:" << std::endl;
+    bool first = true;
+    while (!flowA.empty()) {
+      if (!first) {
+        cout << ", ";
+      }
+      first = false;
+
+      cout << flowA.top();
+      flowA.pop();
+    }
+    cout << std::endl;
   }
 
-  cout << result << std::endl;
+
+  if (flowB.empty()) {
+    cout << "Flow B:" << std::endl << "<EMPTY>" << std::endl;
+  } else {
+    cout << "Flow B:" << std::endl;
+
+    bool first = true;
+    while (!flowB.empty()) {
+      if (!first) {
+        cout << ", ";
+      }
+      first = false;
+      cout << flowB.front();
+      flowB.pop();
+    }
+    cout << std::endl;
+  }
 
   return 0;
 }

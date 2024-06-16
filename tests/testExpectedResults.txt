@@ -1,3 +1,14 @@
->><
+Flow A:
+Perch, Bass
+Flow B:
+Pike, Tuna
 ===
-=<+
+Flow A:
+Catfish, Trout, Goldfish
+Flow B:
+<EMPTY>
+===
+Flow A:
+Finn, Bubbles, Coral, Dory, Nemo
+Flow B:
+Marlin, Goldie, Splash
