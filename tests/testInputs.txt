@@ -1,5 +1,25 @@
-123456789012345678901234567890 98765432109876543210987654          123456789098765432101234567890
-234567890123456789012345678901 876543210987654321098765432109 23456780987654321012345678901
+9
+Europe Bulgaria Sofia
+Asia China Beijing
+Asia Japan Tokyo
+Europe Poland Warsaw
+Europe Germany Berlin
+Europe Poland Poznan
+Europe Bulgaria Plovdiv
+Africa Nigeria Abuja
+Asia China Shanghai
 ===
-123456789012345678901234567890 63315432109876543210987654  123456789098765432101234567890
-123456789012345678901234567890 63315432109854321098765432
+3
+Europe Germany Berlin
+Europe Bulgaria Varna
+Africa Egypt Cairo
+===
+8
+Africa Somalia Mogadishu
+Asia India Mumbai
+Asia India Delhi
+Europe France Paris
+Asia India Nagpur
+Europe Germany Hamburg
+Europe Poland Gdansk
+Europe Germany Danzig

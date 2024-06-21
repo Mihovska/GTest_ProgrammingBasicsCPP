@@ -1,3 +1,24 @@
->><
+Africa:
+  Nigeria -> Abuja
+Asia:
+  China -> Beijing, Shanghai
+  Japan -> Tokyo
+Europe:
+  Bulgaria -> Plovdiv, Sofia
+  Germany -> Berlin
+  Poland -> Poznan, Warsaw
 ===
-=<+
+Africa:
+  Egypt -> Cairo
+Europe:
+  Bulgaria -> Varna
+  Germany -> Berlin
+===
+Africa:
+  Somalia -> Mogadishu
+Asia:
+  India -> Delhi, Mumbai, Nagpur
+Europe:
+  France -> Paris
+  Germany -> Danzig, Hamburg
+  Poland -> Gdansk
