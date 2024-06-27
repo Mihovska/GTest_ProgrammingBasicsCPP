@@ -16,46 +16,63 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <map>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-int process(std::istream &cin, std::ostream &cout) {
-  int linesCount = 0;
-  cin >> linesCount;
-  std::map<std::string, std::map<std::string, std::vector<std::string>>> data;
-
-  for (int i = 0; i < linesCount; ++i) {
-    std::string continent;
-    std::string country;
-    std::string city;
-
-    cin >> continent >> country >> city;
-
-    data[continent][country].push_back(city);
+bool compareMatrices(const std::vector<std::vector<int>> &matrix1,
+                     const std::vector<std::vector<int>> &matrix2) {
+  if (matrix1.size() != matrix2.size()) {
+    return false;
   }
 
-  for (auto &continent : data) {
-    for (auto &country : continent.second) {
-      std::sort(country.second.begin(), country.second.end());
+  for (size_t i = 0; i < matrix1.size(); ++i) {
+    if (matrix1[i].size() != matrix2[i].size()) {
+      return false;
     }
-  }
 
-  for (const auto &continent : data) {
-    cout << continent.first << ":" << std::endl;
-    for (const auto &country : continent.second) {
-      cout << "  " << country.first << " -> ";
-      for (size_t i = 0; i < country.second.size(); ++i) {
-        if (i > 0) {
-          cout << ", ";
-        }
-        cout << country.second[i];
+    for (size_t j = 0; j < matrix2[i].size(); ++j) {
+      if (matrix1[i][j] != matrix2[i][j]) {
+        return false;
       }
-      cout << std::endl;
     }
   }
+  return true;
+}
+
+std::vector<std::vector<int>> readMatrix(std::istream &cin) {
+  int rows;
+
+  cin >> rows;
+  cin.ignore();
+  std::vector<std::vector<int>> matrix;
+
+  matrix.resize(rows);
+  for (int i = 0; i < rows; ++i) {
+    std::string line;
+    std::getline(cin, line);
+    std::istringstream iss(line);
+
+    int num;
+    while (iss >> num) {
+      matrix[i].push_back(num);
+    }
+  }
+
+  return matrix;
+}
+
+int process(std::istream &cin, std::ostream &cout) {
+  std::vector<std::vector<int>> matrix1 = readMatrix(cin);
+  std::vector<std::vector<int>> matrix2 = readMatrix(cin);
+
+  if (compareMatrices(matrix1, matrix2)) {
+    cout << "equal" << std::endl;
+  } else {
+    cout << "not equal" << std::endl;
+  }
+
   return 0;
 }
 
