@@ -50,12 +50,16 @@ std::string printComparissonSign(std::vector<std::string> firstVec,
   }
   return result;
 }
+int process(std::istream &cin, std::ostream &cout) {
+  int rows;
+  int cols;
 
 int process(std::istream &cin, std::ostream &cout) {
   std::vector<std::string> firstVector;
   std::vector<std::string> secondVector;
 
   std::string line;
+  std::vector<std::vector<char>> matrix(rows, std::vector<char> (cols));
 
   getline(cin, line);
   std::istringstream issFirst(line);
@@ -83,6 +87,20 @@ int process(std::istream &cin, std::ostream &cout) {
   }
 
   cout << result << std::endl;
+  int count = 0;
+
+  for (int i = 0; i < rows - 1; ++i) {
+    for (int j = 0; j < cols - 1; ++j) {
+
+    if (matrix[i][j] == matrix[i + 1][j] &&
+        matrix[i][j] == matrix[i][j + 1] &&
+        matrix[i][j] == matrix[i + 1][j + 1]) {
+        count++;
+      }
+    }
+  }
+
+  cout << count << std::endl;
 
   return 0;
 }
