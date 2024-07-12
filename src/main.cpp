@@ -1,106 +1,70 @@
 #include <algorithm>
-#include <array>
 #include <cctype>
 #include <cfloat>
 #include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <iomanip>
-#include <ios>
 #include <iostream>
-#include <iterator>
-#include <list>
-#include <locale>
 #include <ostream>
-#include <sstream>
+#include <iomanip>
 #include <string>
 #include <vector>
+#include <map>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-std::string printComparissonSign(std::vector<std::string> firstVec,
-                                 std::vector<std::string> secondVec, int size) {
-  std::string result;
-  for (int i = 0; i < size; ++i) {
-    if (i < firstVec.size() && i < secondVec.size()) {
-      std::string firstNum = firstVec[i];
-      std::string secondNum = secondVec[i];
+class Sale {
+ public:
+  std::string town;
+  std::string product;
+  double price;
+  double quantity;
 
-      if (firstNum.length() > secondNum.length()) {
-        result += "<";
-      } else if (firstNum.length() < secondNum.length()) {
-        result += ">";
-      } else {
-        if (firstNum > secondNum) {
-          result += "<";
-        } else if (firstNum < secondNum) {
-          result += ">";
-        } else {
-          result += "=";
-        }
-      }
-    } else if (i < firstVec.size()) {
-      result += "+";
-    } else {
-      result += "-";
+  Sale(const std::string &town, const std::string &product, double price, double quantity) :
+                          town(town), product(product), price(price), quantity(quantity) {}
+
+  std::map<std::string, double> calculateTotalSalesByTown(const std::vector<Sale> &sales) {
+    std::map<std::string, double> totalSalesByTown;
+
+    for (const auto &sale : sales) {
+      totalSalesByTown[sale.town] += sale.price * sale.quantity;
+    }
+
+    return totalSalesByTown;
+  }
+
+  void printTotalSalesByTown(const std::map<std::string, double> &salesByTown) {
+    std::vector<std::pair<std::string, double>> salesByTownSorted(salesByTown.begin(), salesByTown.end());
+
+    std::sort(salesByTownSorted.begin(), salesByTownSorted.end());
+
+    for (const auto &sale : salesByTownSorted) {
+      std::cout << sale.first << " -> " << std::fixed << std::setprecision(2) << sale.second << std::endl;
     }
   }
-  return result;
-}
-int process(std::istream &cin, std::ostream &cout) {
-  int rows;
-  int cols;
+};
 
 int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVector;
-  std::vector<std::string> secondVector;
+  int numberOfSales;
+  cin >> numberOfSales;
 
-  std::string line;
-  std::vector<std::vector<char>> matrix(rows, std::vector<char> (cols));
+  std::string town;
+  std::string product;
+  double price;
+  double quantity;
 
-  getline(cin, line);
-  std::istringstream issFirst(line);
-  std::string num;
-  while (issFirst >> num) {
-    firstVector.push_back(num);
+  std::vector<Sale> sales;
+  for (int i = 0; i < numberOfSales; ++i) {
+    cin >> town >> product >> price >> quantity;
+    sales.emplace_back(town, product, price, quantity);
   }
 
-  getline(cin, line);
-  std::istringstream issSecond(line);
-  while (issSecond >> num) {
-    secondVector.push_back(num);
-  }
-
-  std::string result;
-  if (firstVector.size() < secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, secondVector.size());
-  } else if (firstVector.size() > secondVector.size()) {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  } else {
-    result =
-        printComparissonSign(firstVector, secondVector, firstVector.size());
-  }
-
-  cout << result << std::endl;
-  int count = 0;
-
-  for (int i = 0; i < rows - 1; ++i) {
-    for (int j = 0; j < cols - 1; ++j) {
-
-    if (matrix[i][j] == matrix[i + 1][j] &&
-        matrix[i][j] == matrix[i][j + 1] &&
-        matrix[i][j] == matrix[i + 1][j + 1]) {
-        count++;
-      }
-    }
-  }
-
-  cout << count << std::endl;
+  Sale sale(town, product, price, quantity);
+  std::map<std::string, double> totalSalesByTown = sale.calculateTotalSalesByTown(sales);
+  sale.printTotalSalesByTown(totalSalesByTown);
 
   return 0;
 }
@@ -114,3 +78,4 @@ int main(int argc, char **argv) {
   return 0;
 #endif
 }
+

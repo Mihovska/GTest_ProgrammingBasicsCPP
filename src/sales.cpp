@@ -24,19 +24,7 @@ class Sale {
   double quantity;
 
   Sale(const std::string &town, const std::string &product, double price, double quantity) :
-  town(town), product(product), price(price), quantity(quantity) {}
-
-  static void readSales(std::vector<Sale> &sales, int numberOfSales) {
-    for (int i = 0; i < numberOfSales; ++i) {
-      std::string town;
-      std::string product;
-      double price;
-      double quantity;
-      std::cin >> town >> product >> price >> quantity;
-
-      sales.emplace_back(Sale(town, product, price, quantity));
-    }
-  }
+                          town(town), product(product), price(price), quantity(quantity) {}
 
   std::map<std::string, double> calculateTotalSalesByTown(const std::vector<Sale> &sales) {
     std::map<std::string, double> totalSalesByTown;
@@ -60,11 +48,19 @@ class Sale {
 };
 
 int process(std::istream &cin, std::ostream &cout) {
-  int n;
-  cin >> n;
+  int numberOfSales;
+  cin >> numberOfSales;
 
   std::vector<Sale> sales;
-  Sale::readSales(sales, n);
+  for (int i = 0; i < numberOfSales; ++i) {
+    std::string town;
+    std::string product;
+    double price;
+    double quantity;
+
+    cin >> town >> product >> price >> quantity;
+    sales.emplace_back(town, product, price, quantity);
+  }
 
   Sale sale("", "", 0, 0);
 
