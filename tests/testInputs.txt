@@ -1,8 +1,6 @@
-3 4
-A B B D
-E B B B
-I J B B
-===
-2 2
-a b
-c d
+5
+Sofia beer 1.20 160
+Varna chocolate 2.35 86
+Sofia coffee 0.40 853
+Varna apple 0.86 75.44
+Plovdiv beer 1.10 88
