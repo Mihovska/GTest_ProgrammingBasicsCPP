@@ -1,4 +1,5 @@
-Ivan 22
-Dragan 23
-===
-Polya Pavlova
+Formatted Lines
+----------------
+1. hello (5)
+2. c++ operators (13)
+----------------
