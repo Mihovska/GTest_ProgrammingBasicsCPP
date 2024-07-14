@@ -1,20 +1,12 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.22)
 project(PB)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Find the GoogleTest package
-find_package(GTest REQUIRED)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-include_directories(${GTEST_INCLUDE_DIRS} src)
+include_directories(src)
 
-add_executable(PB src/main.cpp)
+file(GLOB_RECURSE SOURCES "src/Skeleton/*.cpp" "src/Skeleton/*.h")
 
-# Create a separate executable for the tests
-add_executable(PbTest tests/main_test.cpp)
-
-# Add a compile definition to the test executable
-target_compile_definitions(PbTest PRIVATE TESTING)
-
-# Link the GoogleTest package with our executable
-target_link_libraries(PbTest ${GTEST_LIBRARIES} pthread)
+add_executable(PB ${SOURCES})

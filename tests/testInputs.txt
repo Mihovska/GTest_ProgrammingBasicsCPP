@@ -1,8 +1,0 @@
-3 4
-A B B D
-E B B B
-I J B B
-===
-2 2
-a b
-c d
