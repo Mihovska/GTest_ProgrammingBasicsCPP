@@ -22,6 +22,10 @@
 #endif
 
 int process(std::istream &cin, std::ostream &cout) {
+  int number = 0;
+  cin >> number;
+
+
   return 0;
 }
 
