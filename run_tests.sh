@@ -1,23 +1,23 @@
 #!/bin/bash
-
-# Number of test cases (parameterized)
-NUM_TESTS=1
-
-# Compile the project
-cmake -S . -B out/Debug
-cmake --build out/Debug
-
-# Run tests
-for i in $(seq 1 $NUM_TESTS)
-do
-    echo "Running test $i..."
-    sed -n "/^===$((i-1))$/,/^===$i$/p" tests/Test.in.txt | sed '1d;$d' | ./out/Debug/PB > tests/temp.$i.out.txt
-    expected=$(sed -n "/^===$((i-1))$/,/^===$i$/p" tests/Test.out.txt | sed '1d;$d')
-    if diff -u <(echo "$expected") tests/temp.$i.out.txt > tests/diff.$i.txt; then
-        echo "Test $i passed!"
-        rm tests/diff.$i.txt
-    else
-        echo "Test $i failed! See diff in tests/diff.$i.txt"
-    fi
-    rm tests/temp.$i.out.txt
+cd out/Debug || exit
+cmake .
+make
+cd ../../
+awk '/===/{n++;next}{print >"tests/Test.in.split."n}' tests/Test.in.txt
+awk '/===/{n++;next}{print >"tests/Test.out.split."n}' tests/Test.out.txt
+INPUTS=(tests/Test.in.split.*)
+OUTPUTS=(tests/Test.out.split.*)
+for i in "${!INPUTS[@]}"; do
+  echo "Running test $((i + 1))..."
+  ./out/Debug/PB <"${INPUTS[i]}" >tests/temp.out.txt
+  if diff -Z -B -q tests/temp.out.txt "${OUTPUTS[i]}" >/dev/null; then
+    echo "Test $((i + 1)) passed!"
+  else
+    echo "Test $((i + 1)) failed!"
+    echo "Input was:"
+    cat "${INPUTS[i]}"
+    echo "Output diff:"
+    diff -Z -B tests/temp.out.txt "${OUTPUTS[i]}"
+  fi
 done
+rm tests/temp.out.txt tests/Test.in.split.* tests/Test.out.split.*
