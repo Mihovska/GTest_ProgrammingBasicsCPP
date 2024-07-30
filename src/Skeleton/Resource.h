@@ -17,7 +17,7 @@ class Resource {
 
  public:
   Resource() = default;
-  Resource(int id, ResourceType type, std::string &link) : id(id), type(type), link(link) {}
+  Resource(int id, const ResourceType &type, const std::string &link) : id(id), type(type), link(link) {}
 
   ResourceType getType() const {
     return type;
