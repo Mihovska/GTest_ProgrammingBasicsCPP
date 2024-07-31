@@ -1,13 +1,13 @@
 #ifndef RESOURCE_TYPE_H
 #define RESOURCE_TYPE_H
 
+#include <iostream>
 namespace SoftUni {
 	enum ResourceType {
 		PRESENTATION,
 		DEMO,
 		VIDEO
 	};
-
 	std::ostream& operator<<(std::ostream& out, enum ResourceType t) {
 		switch (t)
 		{
@@ -15,7 +15,7 @@ namespace SoftUni {
 			out << "Presentation";
 			break;
 		case ResourceType::DEMO:
-		out << "Demo";
+			out << "Demo";
 			break;
 		case ResourceType::VIDEO:
 			out << "Video";
@@ -24,10 +24,9 @@ namespace SoftUni {
 			out << "[unknown]";
 			break;
 		}
-
 		return out;
 	}
 }
 
-#endif // !RESOURCE_TYPE_H
+#endif  // !RESOURCE_TYPE_H
 
