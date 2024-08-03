@@ -3,11 +3,9 @@
 #include <set>
 #include <vector>
 
-
 #include "Lecture.h"
 #include "Resource.h"
 #include "ResourceType.h"
-
 
 int main() {
   using SoftUni::Lecture;

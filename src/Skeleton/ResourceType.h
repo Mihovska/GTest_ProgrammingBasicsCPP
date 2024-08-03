@@ -1,5 +1,8 @@
 #ifndef RESOURCE_TYPE_H
 #define RESOURCE_TYPE_H
+
+#include <iostream>
+
 namespace SoftUni {
 enum ResourceType { PRESENTATION, DEMO, VIDEO };
 
