@@ -14,14 +14,7 @@ bool Article13Filter::blockIfCopyrighted(std::string s) {
 }
 
 bool Article13Filter::isCopyrighted(std::string s) {
-  bool found = false;
-  for (std::string item : copyrighted) {
-    if (s.find(item) != std::string::npos) {
-      found = true;
-      break;
-    }
-  }
-  return found;
+  return this->copyrighted.find(s) != this->copyrighted.end();
 }
 
 std::vector<std::string> Article13Filter::getBlocked() {

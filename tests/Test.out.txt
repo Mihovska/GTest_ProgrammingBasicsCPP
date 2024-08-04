@@ -1,3 +1,9 @@
 notblocked
 hello
 Blocked: eussr machines censorship
+===
+openai
+gpt4
+Blocked: copyright
+===
+Blocked: github copilot

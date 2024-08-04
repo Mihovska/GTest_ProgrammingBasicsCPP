@@ -5,3 +5,14 @@ machines
 hello
 censorship
 end
+===
+ai copyright
+openai
+gpt4
+copyright
+end
+===
+github copilot
+github
+copilot
+end
