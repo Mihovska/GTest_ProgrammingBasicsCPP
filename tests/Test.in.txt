@@ -15,18 +15,3 @@ caught-somewhere-in-time 446
 superpalav 246
 ...
 this is not printed
-===
-s
-stopLine
-song1 300
-song2 200
-song3 400
-song4 100
-song5 500
-stopLine
-===
-s
-stopLine
-caught somewhere in time 446
-superpalav 246
-stopLine

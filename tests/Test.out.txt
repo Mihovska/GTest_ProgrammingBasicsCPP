@@ -1,7 +1,3 @@
 6 5 4 3 2 1
 ===
 caught-somewhere-in-time 446 superpalav 246
-===
-song5 500 song3 400 song1 300 song2 200 song4 100
-===
-caught somewhere in time 446 superpalav 246

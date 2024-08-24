@@ -14,7 +14,7 @@ class Reverse {
   Comparator compare;
  public:
   bool operator()(const T&a, const T& b) const {
-    return compare(b, a);
+    return !compare(a, b);
   }
 };
 
