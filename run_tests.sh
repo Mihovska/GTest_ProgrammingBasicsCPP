@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p out/Debug || exit
 cd out/Debug || exit
-cmake ../..
+cmake .
 make
 cd ../../
 awk '/===/{n++;next}{print >"tests/Test.in.split."n}' tests/Test.in.txt

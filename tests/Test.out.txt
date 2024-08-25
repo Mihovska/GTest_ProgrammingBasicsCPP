@@ -1,3 +1,9 @@
-Brand -> Volkswagen
-Model -> Golf
-Year -> 2015
+1. Pine tree with rounded leaves, which produces needles and cones and is great for walking under, because it's evergreen.
+2. Maple tree with palmate, hand-like leaves, which produces helicopter seeds and is great for maple syrup production.
+3. Oak tree with lobed leaves, which produces acorns and is great for wood working, because it's hard.
+4. Maple tree with palmate, hand-like leaves, which produces helicopter seeds and is great for maple syrup production.
+===
+1. Maple tree with palmate, hand-like leaves, which produces helicopter seeds and is great for maple syrup production.
+2. Pine tree with rounded leaves, which produces needles and cones and is great for walking under, because it's evergreen.
+3. Oak tree with lobed leaves, which produces acorns and is great for wood working, because it's hard.
+4. Oak tree with lobed leaves, which produces acorns and is great for wood working, because it's hard.
