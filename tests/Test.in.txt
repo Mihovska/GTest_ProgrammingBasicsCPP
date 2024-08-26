@@ -1,3 +1,23 @@
-pine maple oak maple end
+M DesignReview 2024 09 12 09 00 02 00
+M CodeReview 2024 09 12 10 30 01 00
+C DesignReview Alice Smith
+C CodeReview Bob Johnson
+.
 ===
-maple pine oak oak end
+M DailyMeeting 2024 09 10 09 30 00 30
+M StrategyMeet 2024 09 10 10 00 01 00
+M EmptyMeeting 2024 09 10 14 00 01 30
+C DailyMeeting John Doe
+C StrategyMeet John Doe
+.
+===
+M Planning 2024 09 11 10 00 02 00
+M ClientMeeting 2024 09 13 11 00 02 00
+M InternalDiscussion 2024 09 13 11 30 01 00
+C Planning Alice Smith
+C Planning John Doe
+C NonExistent John Doe
+C ClientMeeting John Doe
+C ClientMeeting Jane Doe
+C InternalDiscussion John Doe
+.
