@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p out/Debug || exit
 cd out/Debug || exit
 cmake .
 make

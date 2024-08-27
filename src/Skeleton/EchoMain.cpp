@@ -8,7 +8,6 @@ using namespace std;
 #include "Echo.h"
 #include "EmailContact.h"
 
-
 int main() {
   echoOn = true;
 

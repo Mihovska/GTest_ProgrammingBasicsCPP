@@ -1,4 +1,4 @@
-=== Contact Manager (C) Deluxe Edition ===
+Contact Manager (C) Deluxe Edition
 Hints on? (y/n):
 --- Menu ---
 1. Add contact
@@ -6,7 +6,7 @@ Hints on? (y/n):
 3. Print contact
 4. Toggle hints off/on
 e. Exit
-Please enter a choice (1, 2, 3, or e):
+Please enter a choice (1, 2, 3, or Q):
 Enter contact name and email:
 --- Menu ---
 1. Add contact
@@ -14,9 +14,9 @@ Enter contact name and email:
 3. Print contact
 4. Toggle hints off/on
 e. Exit
-Please enter a choice (1, 2, 3, or e):
+Please enter a choice (1, 2, 3, or Q):
 ===
-=== Contact Manager (C) Deluxe Edition ===
+Contact Manager (C) Deluxe Edition
 Hints on? (y/n):
 ben bendover@example.com
 --- Menu ---
@@ -25,7 +25,7 @@ ben bendover@example.com
 3. Print contact
 4. Toggle hints off/on
 e. Exit
-Please enter a choice (1, 2, 3, or e):
+Please enter a choice (1, 2, 3, or Q):
 Enter the name or email of a contact:
 ... removed ben bendover@example.com
 --- Menu ---
@@ -34,6 +34,6 @@ Enter the name or email of a contact:
 3. Print contact
 4. Toggle hints off/on
 e. Exit
-Please enter a choice (1, 2, 3, or e):
+Please enter a choice (1, 2, 3, or Q):
 Exiting...
 Thank you for using Contact Manager (C) Deluxe!

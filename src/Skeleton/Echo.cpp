@@ -1,10 +1,8 @@
-#include <iostream>
 #include "Echo.h"
 
+bool echoOn = true;
 
-bool echoOn = false;
-
-void echo(std::string& message) {
+void echo(const std::string& message) {
   if (echoOn) {
     std::cout << message << std::endl;
   }

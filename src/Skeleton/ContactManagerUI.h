@@ -8,10 +8,10 @@
 #include "Echo.h"
 #include "EmailContact.h"
 
-
 class ContactManagerUI {
   std::vector<EmailContact>& contacts;
   bool running;
+  bool hintsOn;
 
  public:
   ContactManagerUI(std::vector<EmailContact>& contacts, bool hintsOn);

@@ -1,10 +1,11 @@
-#ifndef ECHO_H
-#define ECHO_H
+#ifndef SRC_SKELETON_ECHO_H_
+#define SRC_SKELETON_ECHO_H_
 
 #include <iostream>
-#include "ContactManagerUI.h"
+#include <string>
 
-bool echoOn;
+extern bool echoOn;
 
 void echo(const std::string& message);
-#endif  // !ECHO_H
+
+#endif  // SRC_SKELETON_ECHO_H_

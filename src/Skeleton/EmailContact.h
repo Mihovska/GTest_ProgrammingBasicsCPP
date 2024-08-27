@@ -4,7 +4,6 @@
 #include <ostream>
 #include <string>
 
-
 class EmailContact {
   std::string name;
   std::string email;
