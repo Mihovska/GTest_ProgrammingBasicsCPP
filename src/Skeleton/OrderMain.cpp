@@ -4,13 +4,15 @@
 #include <vector>
 
 #include "Company.h"
-#include "Find.h"
+#include "OrderedInserter.h"
 
 
 int main() {
   using namespace std;
 
-  vector<Company*> companies;
+  vector<const Company*> companies;
+
+  OrderedInserter inserter{companies};
 
   string line;
   while (getline(cin, line) && line != "end") {
@@ -18,22 +20,11 @@ int main() {
 
     Company* c = new Company();
     lineIn >> *c;
-    companies.push_back(c);
-  }
-
-  string searchIdLine;
-  getline(cin, searchIdLine);
-  int searchId = stoi(searchIdLine);
-
-  Company* companyWithSearchedId = find(companies, searchId);
-
-  if (companyWithSearchedId != nullptr) {
-    cout << *companyWithSearchedId << endl;
-  } else {
-    cout << "[not found]" << endl;
+    inserter.insert((const Company*)c);
   }
 
   for (auto companyPtr : companies) {
+    cout << *companyPtr << endl;
     delete companyPtr;
   }
 
